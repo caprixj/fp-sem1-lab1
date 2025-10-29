@@ -1,0 +1,41 @@
+cabal-version:      3.4
+name:               archive-cli
+version:            0.1.0.0
+license:            MIT
+license-file:       LICENSE
+author:             Anton
+maintainer:         capricavoid7@gmail.com
+build-type:         Simple
+-- extra-doc-files:    CHANGELOG.md
+
+common warnings
+    ghc-options: -Wall
+
+executable archive-cli
+    import:           warnings
+    main-is:          Main.hs
+    other-modules:
+        Database
+        Models
+        Repo
+        Interface
+
+    build-depends:
+        base >=4.14 && <4.20,
+        bytestring ^>=0.11,
+        text ^>=2.0,
+        time ^>=1.12,
+        containers ^>=0.6,
+        uuid ^>=1.3,
+        uuid-types ^>=1.0,
+        aeson ^>=2.2,
+        directory ^>=1.3,
+        filepath ^>=1.4,
+        exceptions ^>=0.10,
+        optparse-applicative ^>=0.18,
+        sqlite-simple ^>= 0.4.19,
+        resource-pool ^>=0.4.0.0
+
+    hs-source-dirs:   app, src
+    ghc-options:      -Wall -threaded -rtsopts -with-rtsopts=-N
+    default-language: Haskell2010
