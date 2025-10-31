@@ -14,6 +14,7 @@ import qualified Data.Text.IO as TIO
 import qualified Data.Text as T
 import Data.Text (Text)
 import Data.Foldable ()
+import System.Directory (doesFileExist)
 
 dbFile :: FilePath
 dbFile = "archive.db"
@@ -32,16 +33,20 @@ runScript conn sqlScript = do
 
 initializeDatabase :: IO ()
 initializeDatabase = do
-  putStrLn "Initializing database..."
-  withDbConnection $ \conn -> do
-    schemaSql <- TIO.readFile schemaFile
-    runScript conn schemaSql
-    putStrLn "Database schema checked."
-    
-    dataSql <- TIO.readFile dataFile
-    runScript conn dataSql
-    putStrLn "Test data checked."
-  putStrLn "Database ready."
+  exists <- doesFileExist dbFile
+  if exists
+    then putStrLn "Database already exists. Skipping initialization."
+    else do
+      putStrLn "Initializing database..."
+      withDbConnection $ \conn -> do
+        schemaSql <- TIO.readFile schemaFile
+        runScript conn schemaSql
+        putStrLn "Database schema checked."
+
+        dataSql <- TIO.readFile dataFile
+        runScript conn dataSql
+        putStrLn "Test data checked."
+      putStrLn "Database ready."
 
 withDbConnection :: (Connection -> IO a) -> IO a
 withDbConnection action = do
