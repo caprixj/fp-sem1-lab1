@@ -3,7 +3,7 @@
 ## Requirements
 
 - [Cabal](https://www.haskell.org/cabal/)
-- The `sqlite3` C library. (On Windows, this can be installed via MSYS2 with `pacman -S mingw-w64-x86_64-sqlite3`)
+- The `sqlite3` C library
 
 ## Setup & Running
 
